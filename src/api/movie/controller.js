@@ -3,10 +3,9 @@ const repository = require("./repository");
 //영화 생성하기
 exports.store = async (req, res) => {
   const body = req.body;
-  const user = req.user;
 
   const result = await repository.create(
-    user.id,
+    body.user_id,
     body.title,
     body.release_date,
     body.end_date,
