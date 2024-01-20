@@ -29,15 +29,16 @@ exports.register = async (req, res) => {
 
   if (affectedRows > 0) {
     // 회원 가입 후 바로 로그인 되는 경우
-    const data = await jwt.jwtSign({ id: insertId, name });
-    res.send({ access_token: data });
+    //const data = await jwt.jwtSign({ id: insertId, name });
+    //res.send({ access_token: data });
+    res.send({ result: "success" , message: "회원가입에 성공했습니다!"})
   } else {
     res.send({ result: "fail" });
   }
 };
 
 exports.login = async (req, res) => {
-  let { email, password } = req.body;
+  const { email, password } = req.body;
   let result = crypto.pbkdf2Sync(
     password,
     process.env.SALT_KEY,
@@ -46,7 +47,7 @@ exports.login = async (req, res) => {
     "sha512"
   );
 
-  let item = await this.login(email, result.toString("base64"));
+  let item = await login(email, result.toString("base64"));
 
   if (item == null) {
     res.send({ result: "fail" });
