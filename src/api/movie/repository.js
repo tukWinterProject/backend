@@ -1,6 +1,8 @@
 const { pool } = require("../../data");
 
+//영화 생성
 exports.create = async (
+  user,
   title,
   release_date,
   end_date,
@@ -9,9 +11,10 @@ exports.create = async (
   image_url
 ) => {
   const query = `INSERT INTO movie
-    (title, release_date, end_date, showing, genre, image_url)
-    VALUES (?, ?, ?, ?, ?, ?)`;
+    (user_id, title, release_date, end_date, showing, genre, image_url)
+    VALUES (?, ?, ?, ?, ?, ?, ?)`;
   return await pool(query, [
+    user,
     title,
     release_date,
     end_date,
@@ -21,8 +24,9 @@ exports.create = async (
   ]);
 };
 
+//개별 영화 정보 가져오기
 exports.show = async (id) => {
-  const query = `SELECT id, title, showing, genre,
+  const query = `SELECT id, user_id, title, showing, genre,
       DATE_FORMAT(release_date, '%Y-%m-%d') AS release_date,
       DATE_FORMAT(end_date, '%Y-%m-%d') AS end_date,
       DATE_FORMAT(registration_date, '%Y-%m-%d') AS registration_date,
@@ -31,4 +35,28 @@ exports.show = async (id) => {
       WHERE movie.id = ?`;
   let result = await pool(query, [id]);
   return result.length < 0 ? null : result[0];
+};
+
+//유저별 영화 가져오기
+exports.showbyUserId = async (id) => {
+  const query = `SELECT m.id, m.user_id, m.title, m.showing, m.genre,
+       DATE_FORMAT(m.release_date, '%Y-%m-%d') AS release_date,
+       DATE_FORMAT(m.end_date, '%Y-%m-%d') AS end_date,
+       DATE_FORMAT(m.registration_date, '%Y-%m-%d') AS registration_date,
+       m.image_url
+       FROM movie m
+       JOIN user u ON m.user_id = u.id
+       WHERE u.id = ?
+`;
+  let result = await pool(query, [id]);
+  return result.length < 0 ? null : result;
+};
+
+//모든 영화 조회하기
+exports.showAllMovie = async () => {
+  const query = `SELECT * FROM movie`;
+  consolg.log("하이룽");
+  let result = await pool(query, []);
+  consolg.log("하이룽");
+  return result.length < 0 ? null : result;
 };

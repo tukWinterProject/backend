@@ -7,11 +7,9 @@ const apiFileController = require("./api/file/controller");
 
 router.use(logging);
 
-router.get("/", (req, res) => {
-  res.send("Hello World");
-});
-
 router.get("/api/movie/:id", apiMovieController.show);
+router.get("/api/movie/lists", apiMovieController.showAllMovie);
+router.get("/api/movie/list/:user_id", apiMovieController.showbyUserId);
 router.post("/api/movie/register", apiMovieController.store);
 
 router.post(
