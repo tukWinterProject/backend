@@ -15,8 +15,8 @@ router.use(logging);
 // 영화 api 도메인
 router.get("/api/movie/:id", apiMovieController.show);
 router.get("/api/movie/lists", apiMovieController.showAllMovie);
-router.get("/api/movie/list/:user_id", apiMovieController.showbyUserId);
-router.post("/api/movie/register", apiMovieController.store);
+router.get("/api/movie/user", verify , apiMovieController.showbyUserId);
+router.post("/api/movie/register", verify ,apiMovieController.store);
 
 router.post(
   "/api/file/upload",
