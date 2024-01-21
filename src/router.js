@@ -2,17 +2,17 @@ const express = require("express");
 const router = express.Router();
 const logging = require("./middleware/logging");
 
-const apiMovieController = require("./api/movie/controller");
-const apiFileController = require("./api/file/controller");
-
 const verify = require("./middleware/jwtVerify");
 
 // 웹 페이지의 controller
-const userController = require("./api/user/controller");
-
+const apiUserController = require("./api/user/controller");
+const apiMovieController = require("./api/movie/controller");
+const apiFileController = require("./api/file/controller");
+const apiReviewController = require("./api/review/controller");
 
 router.use(logging);
 
+// 영화 api 도메인
 router.get("/api/movie/:id", apiMovieController.show);
 router.get("/api/movie/lists", apiMovieController.showAllMovie);
 router.get("/api/movie/list/:user_id", apiMovieController.showbyUserId);
@@ -29,8 +29,13 @@ router.post(
 );
 
 // 유저 기능 도메인
-router.post("/api/user/register", userController.register);
-router.post("/api/user/login", userController.login);
-router.get("/api/user/mypage", verify, userController.mypage);
+router.post("/api/user/register", apiUserController.register);
+router.post("/api/user/login", apiUserController.login);
+router.get("/api/user/mypage", verify, apiUserController.mypage);
+
+// 리뷰 api 도메인
+router.post("/api/review/:id", verify, apiReviewController.create);
+router.get("/api/review/:id", apiReviewController.show);
+router.get("/api/review/user/", verify, apiReviewController.showByUserID);
 
 module.exports = router;
