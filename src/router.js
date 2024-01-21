@@ -14,7 +14,7 @@ router.use(logging);
 
 // 영화 api 도메인
 router.get("/api/movie/:id", apiMovieController.show);
-router.get("/api/movie/lists", apiMovieController.showAllMovie);
+router.get("/api/movie", apiMovieController.showAllMovie);
 router.get("/api/movie/user", verify , apiMovieController.showbyUserId);
 router.post("/api/movie/register", verify ,apiMovieController.store);
 
@@ -36,6 +36,6 @@ router.get("/api/user/mypage", verify, apiUserController.mypage);
 // 리뷰 api 도메인
 router.post("/api/review/:id", verify, apiReviewController.create);
 router.get("/api/review/:id", apiReviewController.show);
-router.get("/api/review/user/", verify, apiReviewController.showByUserID);
+router.get("/api/review/user", verify, apiReviewController.showByUserId);
 
 module.exports = router;
