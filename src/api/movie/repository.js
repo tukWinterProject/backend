@@ -24,6 +24,14 @@ exports.create = async (
   ]);
 };
 
+//내 영화 가져오기
+exports.findMovie = async (id) => {
+  const query = `SELECT * FROM movie
+      WHERE user_id = ?`;
+  let result = await pool(query, [id]);
+  return result.length < 0 ? null : result;
+};
+
 //개별 영화 정보 가져오기
 exports.show = async (id) => {
   const query = `SELECT id, user_id, title, showing, genre,

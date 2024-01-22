@@ -31,11 +31,20 @@ exports.show = async (req, res) => {
   res.send(item);
 };
 
-//유저 아이디로 자기가 등록한 영화 조회하기
-exports.showbyUserId = async (req, res) => {
+//내 영화 조회하기
+exports.showMyMovies = async (req, res) => {
   const user = req.user;
 
-  const item = await repository.showbyUserId(user.id);
+  const item = await repository.findMovie(user.id);
+
+  res.send(item);
+};
+
+//유저 아이디로 영화 조회하기
+exports.showbyUserId = async (req, res) => {
+  const id = req.params.user_id;
+
+  const item = await repository.showbyUserId(id);
 
   res.send(item);
 };
