@@ -10,13 +10,14 @@ const verify = require("./middleware/jwtVerify");
 // 웹 페이지의 controller
 const userController = require("./api/user/controller");
 
-
 router.use(logging);
 
 router.get("/api/movie/:id", apiMovieController.show);
-router.get("/api/movie/lists", apiMovieController.showAllMovie);
+router.get("/api/movie", apiMovieController.showmovies);
 router.get("/api/movie/list/:user_id", apiMovieController.showbyUserId);
-router.post("/api/movie/register", apiMovieController.store);
+router.post("/api/movie/register", verify, apiMovieController.store);
+router.put("/api/movie/:id/update", verify, apiMovieController.update);
+router.delete("/api/movie/:id/delete", verify, apiMovieController.delete);
 
 router.post(
   "/api/file/upload",
