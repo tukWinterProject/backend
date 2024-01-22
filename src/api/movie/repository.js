@@ -54,9 +54,46 @@ exports.showbyUserId = async (id) => {
 
 //모든 영화 조회하기
 exports.showAllMovie = async () => {
-  const query = `SELECT * FROM movie`;
-  consolg.log("하이룽");
+  const query = `SELECT id, user_id, title, showing, genre,
+      DATE_FORMAT(release_date, '%Y-%m-%d') AS release_date,
+      DATE_FORMAT(end_date, '%Y-%m-%d') AS end_date,
+      DATE_FORMAT(registration_date, '%Y-%m-%d') AS registration_date,
+      image_url
+      FROM movie`;
   let result = await pool(query, []);
-  consolg.log("하이룽");
   return result.length < 0 ? null : result;
+};
+
+//영화 수정하기
+exports.update = async (
+  title,
+  release_date,
+  end_date,
+  showing,
+  genre,
+  image_url,
+  id
+) => {
+  const query = `UPDATE movie
+    SET title = ?,
+        release_date = ?,
+        end_date = ?,
+        showing = ?,
+        genre = ?,
+        image_url = ?
+    WHERE id = ?`;
+  return await pool(query, [
+    title,
+    release_date,
+    end_date,
+    showing,
+    genre,
+    image_url,
+    id,
+  ]);
+};
+
+//영화 삭제하기
+exports.delete = async (id) => {
+  return await pool(`DELETE FROM movie WHERE id = ?`, [id]);
 };
