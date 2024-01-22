@@ -36,6 +36,5 @@ router.get("/api/user/mypage", verify, apiUserController.mypage);
 // 리뷰 api 도메인
 router.post("/api/review/:id", verify, apiReviewController.create);
 router.get("/api/review/:id", apiReviewController.show);
-router.get("/api/review/user", verify, apiReviewController.showByUserId);
 
 module.exports = router;

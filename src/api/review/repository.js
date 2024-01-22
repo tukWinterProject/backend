@@ -14,18 +14,7 @@ exports.show = async (id) => {
     DATE_FORMAT(r.created_at, '%Y-%m-%d') AS created_at
     FROM review r
     JOIN movie m ON r.movie_id = m.id
-    WHERE m.id = ?`;
-    let result = await pool(query, [id]);
-    return result.length < 0 ? null : result;
-}
-
-// 유저가 작성한 리뷰들 조회
-exports.showByUserID = async (id) => {
-    const query = `SELECT r.id, r.content, r.rating,
-    DATE_FORMAT(r.created_at, '%Y-%m-%d') AS created_at
-    FROM review r
-    JOIN user u ON r.user_id = u.id
-    WHERE u.id = ?`;
+    WHERE r.movie_id = ?`;
     let result = await pool(query, [id]);
     return result.length < 0 ? null : result;
 }

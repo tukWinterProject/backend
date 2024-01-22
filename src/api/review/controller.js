@@ -1,4 +1,4 @@
-const { create, show, showByUserID } = require("./repository");
+const { create, show } = require("./repository");
 
 // 리뷰 생성하기
 exports.create = async (req, res) => {
@@ -20,15 +20,6 @@ exports.show = async (req, res) => {
     const id = req.params.id;
 
     const items = await show(id);
-
-    res.send(items);
-}
-
-// 유저가 작성한 리뷰들 조회
-exports.showByUserID = async (req, res) => {
-    const user_id = req.user.id;
-
-    const items = await showByUserID(user_id);
 
     res.send(items);
 }
