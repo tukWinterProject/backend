@@ -4,7 +4,6 @@ const repository = require("./repository");
 exports.store = async (req, res) => {
   const user = req.user;
   const body = req.body;
-  const user = req.user;
 
   const result = await repository.create(
     user.id,
