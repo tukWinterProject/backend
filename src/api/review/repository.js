@@ -13,7 +13,7 @@ exports.show = async (id) => {
   const query = `
         SELECT r.id, r.content, r.rating,
         DATE_FORMAT(r.created_at, '%Y-%m-%d') AS created_at,
-        u.name AS user_name
+        u.name AS name
         FROM review r
         JOIN movie m ON r.movie_id = m.id
         JOIN user u ON r.user_id = u.id
